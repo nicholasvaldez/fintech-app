@@ -16,7 +16,7 @@ const Page = () => {
   const [countryCode, setCountryCode] = useState("+49")
   const [phoneNumber, setPhoneNumber] = useState("")
   const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0
-  const onSignUp = async () => {}
+  const onSignIn = async () => {}
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -24,9 +24,9 @@ const Page = () => {
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <View style={defaultStyles.container}>
-        <Text style={defaultStyles.header}>Let's get started!</Text>
+        <Text style={defaultStyles.header}>Welcome back!</Text>
         <Text style={defaultStyles.descriptionText}>
-          Enter your phone number and we will send you a confirmation code.
+          Enter the phone number associated with your account
         </Text>
         <View style={styles.inputContainer}>
           <TextInput
@@ -44,24 +44,33 @@ const Page = () => {
             placeholderTextColor={Colors.gray}
           />
         </View>
-        <Link href={"/login"} asChild>
-          <TouchableOpacity>
-            <Text style={defaultStyles.textLink}>
-              Already have an account? Log in
-            </Text>
-          </TouchableOpacity>
-        </Link>
-        <View style={{ flex: 1 }} />
         <TouchableOpacity
           style={[
             defaultStyles.pillButton,
             phoneNumber !== "" ? styles.enabled : styles.disabled,
             { marginBottom: 20 },
           ]}
-          onPress={onSignUp}
+          onPress={onSignIn}
         >
-          <Text style={defaultStyles.buttonText}>Sign Up</Text>
+          <Text style={defaultStyles.buttonText}>Continue</Text>
         </TouchableOpacity>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 16 }}>
+          <View
+            style={{
+              flex: 1,
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: Colors.gray,
+            }}
+          />
+          <Text style={{ color: Colors.gray, fontSize: 20 }}>or</Text>
+          <View
+            style={{
+              flex: 1,
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: Colors.gray,
+            }}
+          />
+        </View>
       </View>
     </KeyboardAvoidingView>
   )
