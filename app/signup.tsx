@@ -10,13 +10,30 @@ import {
 import React, { useState } from "react"
 import { defaultStyles } from "@/constants/Styles"
 import Colors from "@/constants/Colors"
-import { Link } from "expo-router"
+import { Link, useRouter } from "expo-router"
+import { useSignIn, useSignUp } from "@clerk/clerk-expo"
 
 const Page = () => {
   const [countryCode, setCountryCode] = useState("+49")
   const [phoneNumber, setPhoneNumber] = useState("")
   const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0
-  const onSignUp = async () => {}
+  const router = useRouter()
+  const { signUp } = useSignUp()
+  const onSignUp = async () => {
+    const fullPhoneNumber = `${countryCode}${phoneNumber}`
+
+    try {
+      await signUp!.create({
+        phoneNumber: fullPhoneNumber,
+      })
+      router.push({
+        pathname: "verify/[phone]",
+        params: { phone: fullPhoneNumber },
+      })
+    } catch (error) {
+      console.error("Error signing up:", error)
+    }
+  }
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
